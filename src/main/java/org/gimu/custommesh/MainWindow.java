@@ -1,4 +1,3 @@
-package main.java.org.gimu.custommesh;
 /*
  *  Copyright 2017 Son Nguyen <mail@gimu.org>
  *
@@ -14,10 +13,15 @@ package main.java.org.gimu.custommesh;
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
+package main.java.org.gimu.custommesh;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class MainWindow extends JFrame {
     public JPanel mainPanel;
@@ -29,6 +33,9 @@ public class MainWindow extends JFrame {
     private JButton openButton;
     private JButton openButton1;
     private JTextField textField2;
+
+    private String sourceFile = null;
+    private String targetFile = null;
 
     public MainWindow() {
         mergeToTargetCustomizationButton.addActionListener(new ActionListener() {
@@ -47,6 +54,7 @@ public class MainWindow extends JFrame {
                 int result = fileChooser.showOpenDialog(openButton);
                 if (result == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();
+                    sourceFile = selectedFile.getAbsolutePath();
                     System.out.println("File: " + selectedFile.getAbsolutePath());
                 }
             }
@@ -61,9 +69,29 @@ public class MainWindow extends JFrame {
                 int result = fileChooser.showOpenDialog(openButton1);
                 if (result == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();
+                    targetFile = selectedFile.getAbsolutePath();
                     System.out.println("File: " + selectedFile.getAbsolutePath());
                 }
             }
         });
+
+        // Merge action
+        mergeToTargetCustomizationButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                byte[] sourceData = null, targetData = null;
+                Path path = Paths.get(sourceFile);
+                try {
+                    sourceData = Files.readAllBytes(path);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                System.out.println(getClassFromData(sourceData));
+            }
+        });
+    }
+
+    private String getClassFromData(byte[] data) {
+        return Constants.CLASS_MAP.get(BitConverter.toUInt64(data, Constants.CLASS_ID.getOffset()));
     }
 }

@@ -1,27 +1,44 @@
+/*
+ *  Copyright 2017 Son Nguyen <mail@gimu.org>
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
 package main.java.org.gimu.custommesh;
 
-import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Constants {
 
-    public static final Map<BigInteger, String> CLASSMAP;
+    public static final DataBlock GAME_VERSION = new DataBlock(4, 12);
+    public static final DataBlock CLASS_ID = new DataBlock(68, 8);
+
+    public static final Map<Long, String> CLASS_MAP;
     static
     {
-        CLASSMAP = new HashMap<BigInteger, String>();
-        CLASSMAP.put(new BigInteger("9287506164331278002"), "Berserker");
-        CLASSMAP.put(new BigInteger("17145927421228022900"), "Ranger");
-        CLASSMAP.put(new BigInteger("10764718972524210919"), "Tamer");
-        CLASSMAP.put(new BigInteger("1251758517271041305"), "Sorceress");
-        CLASSMAP.put(new BigInteger("10777537339687380824"), "Valkyrie");
-        CLASSMAP.put(new BigInteger("10764718972524210919"), "Witch");
-        CLASSMAP.put(new BigInteger("17759858246325470518"), "Wizard");
-        CLASSMAP.put(new BigInteger("4956354676860611428"), "Warrior");
-        CLASSMAP.put(new BigInteger("7011772489808301336"), "Musa");
-        CLASSMAP.put(new BigInteger("10613727790916565293"), "Maehwa");
-        CLASSMAP.put(new BigInteger("17453010291577773289"), "Kunoichi");
-        CLASSMAP.put(new BigInteger("10978699858950456037"), "Ninja");
-        CLASSMAP.put(new BigInteger("7534873226274538481"), "Dark Knight");
+        CLASS_MAP = new HashMap<Long, String>();
+        CLASS_MAP.put(Long.parseUnsignedLong("2142453751"), "Dark Knight");
+        CLASS_MAP.put(Long.parseUnsignedLong("1474279357"), "Sorceress");
+        CLASS_MAP.put(Long.parseUnsignedLong("18446744072574971903"), "Ninja");
+        CLASS_MAP.put(Long.parseUnsignedLong("18446744073540722173"), "Musa");
+        CLASS_MAP.put(Long.parseUnsignedLong("18446744072422947133"), "Maehwa");
+        CLASS_MAP.put(Long.parseUnsignedLong("18446744073487244523"), "Kunoichi");
+        CLASS_MAP.put(Long.parseUnsignedLong("18446744073036360565"), "Warrior");
+        CLASS_MAP.put(Long.parseUnsignedLong("18446744073132025691"), "Valkyrie");
+        CLASS_MAP.put(Long.parseUnsignedLong("18446744072350072758"), "Berserker");
+        CLASS_MAP.put(Long.parseUnsignedLong("18446744073707320315"), "Tamer");
+        CLASS_MAP.put(Long.parseUnsignedLong("18446744073441050229"), "Ranger");
+        CLASS_MAP.put(Long.parseUnsignedLong("18446744072459124479"), "Witch");
+        CLASS_MAP.put(Long.parseUnsignedLong("18446744073574790654"), "Wizard");
     }
 }
