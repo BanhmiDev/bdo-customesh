@@ -16,14 +16,23 @@
 package main.java.org.gimu.custommesh;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Main {
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("BDO CustomMesh");
+
+        // Centering
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int)((dimension.getWidth() - frame.getWidth()) / 2);
+        int y = (int)((dimension.getHeight() - frame.getHeight()) / 2);
+        frame.setLocation(x, y);
+        frame.setResizable(false);
         frame.setContentPane(new MainWindow().mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+
     }
 }

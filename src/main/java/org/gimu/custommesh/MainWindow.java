@@ -26,16 +26,29 @@ import java.nio.file.Paths;
 public class MainWindow extends JFrame {
     public JPanel mainPanel;
     private JButton mergeToTargetCustomizationButton;
-    private JCheckBox voiceCheckBox;
+    private JCheckBox faceShapeCheckBox;
     private JPanel filePanel;
     private JPanel dataPanel;
-    private JTextField textField1;
+    private JTextField sourceField;
     private JButton openButton;
     private JButton openButton1;
-    private JTextField textField2;
+    private JTextField targetField;
+    private JLabel errorLabel;
+    private JPanel informationPanel;
+    private JLabel sourceClassLabel;
+    private JLabel targetClassLabel;
+    private JCheckBox hairAndFaceCheckBox;
+    private JCheckBox hairColorCheckBox;
+    private JCheckBox skinCheckBox;
+    private JCheckBox eyeMakeupCheckBox;
+    private JCheckBox eyeLineCheckBox;
+    private JCheckBox eyesCheckBox;
+    private JCheckBox bodyShapeCheckBox;
+    private JCheckBox standbyExpressionCheckBox;
+    private JCheckBox voiceCheckBox;
 
-    private String sourceFile = null;
-    private String targetFile = null;
+    private byte[] sourceData = null;
+    private byte[] targetData = null;
 
     public MainWindow() {
         mergeToTargetCustomizationButton.addActionListener(new ActionListener() {
@@ -53,9 +66,8 @@ public class MainWindow extends JFrame {
                 fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
                 int result = fileChooser.showOpenDialog(openButton);
                 if (result == JFileChooser.APPROVE_OPTION) {
-                    File selectedFile = fileChooser.getSelectedFile();
-                    sourceFile = selectedFile.getAbsolutePath();
-                    System.out.println("File: " + selectedFile.getAbsolutePath());
+                    sourceField.setText(fileChooser.getSelectedFile().getAbsolutePath());
+                    loadSourceData(sourceField.getText());
                 }
             }
         });
@@ -68,9 +80,8 @@ public class MainWindow extends JFrame {
                 fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
                 int result = fileChooser.showOpenDialog(openButton1);
                 if (result == JFileChooser.APPROVE_OPTION) {
-                    File selectedFile = fileChooser.getSelectedFile();
-                    targetFile = selectedFile.getAbsolutePath();
-                    System.out.println("File: " + selectedFile.getAbsolutePath());
+                    targetField.setText(fileChooser.getSelectedFile().getAbsolutePath());
+                    loadTargetData(targetField.getText());
                 }
             }
         });
@@ -79,16 +90,32 @@ public class MainWindow extends JFrame {
         mergeToTargetCustomizationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                byte[] sourceData = null, targetData = null;
-                Path path = Paths.get(sourceFile);
-                try {
-                    sourceData = Files.readAllBytes(path);
-                } catch (IOException e1) {
-                    e1.printStackTrace();
+                if (sourceField.getText().isEmpty() || targetField.getText().isEmpty()) {
+                    errorLabel.setText("Please ...");
+                    return;
                 }
-                System.out.println(getClassFromData(sourceData));
             }
         });
+    }
+
+    private void loadSourceData(String path) {
+        Path sourcePath = Paths.get(path);
+        try {
+            sourceData = Files.readAllBytes(sourcePath);
+            sourceClassLabel.setText(getClassFromData(sourceData));
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    private void loadTargetData(String path) {
+        Path targetPath = Paths.get(path);
+        try {
+            targetData = Files.readAllBytes(targetPath);
+            targetClassLabel.setText(getClassFromData(targetData));
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
     }
 
     private String getClassFromData(byte[] data) {
