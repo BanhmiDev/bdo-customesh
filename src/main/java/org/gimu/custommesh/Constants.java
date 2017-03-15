@@ -47,15 +47,15 @@ public class Constants {
     {
         APPEARANCE_MAP = new HashMap<String, DataBlock>();
 
-        APPEARANCE_MAP.put("HairAndFace", new DataBlock(76, 8));
-        APPEARANCE_MAP.put("HairColors", new DataBlock(92, 8));
+        APPEARANCE_MAP.put("Hair and Face", new DataBlock(76, 8));
+        APPEARANCE_MAP.put("Hair Color", new DataBlock(92, 8));
         APPEARANCE_MAP.put("Skin", new DataBlock(100, 8));
-        APPEARANCE_MAP.put("EyeMakeup", new DataBlock(108, 24));
-        APPEARANCE_MAP.put("EyeLine", new DataBlock(140, 8));
+        APPEARANCE_MAP.put("Eye Makeup", new DataBlock(108, 24));
+        APPEARANCE_MAP.put("Eye Line", new DataBlock(140, 8));
         APPEARANCE_MAP.put("Eyes", new DataBlock(148, 40));
-        APPEARANCE_MAP.put("FaceShape", new DataBlock(220, 392));
-        APPEARANCE_MAP.put("BodyShape", new DataBlock(604, 96));
-        APPEARANCE_MAP.put("StandbyExpression", new DataBlock(884, 8));
+        APPEARANCE_MAP.put("Face Shape", new DataBlock(220, 392));
+        APPEARANCE_MAP.put("Body Shape", new DataBlock(604, 96));
+        APPEARANCE_MAP.put("Standby Expression", new DataBlock(884, 8));
         APPEARANCE_MAP.put("Voice", new DataBlock(892, 8));
     }
 }

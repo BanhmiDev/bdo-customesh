@@ -16,12 +16,15 @@
 package main.java.org.gimu.custommesh;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.LinkedList;
+import java.util.List;
 
 public class MainWindow extends JFrame {
     public JPanel mainPanel;
@@ -91,11 +94,47 @@ public class MainWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (sourceField.getText().isEmpty() || targetField.getText().isEmpty()) {
-                    errorLabel.setText("Please ...");
+                    errorLabel.setText("Missing source or target file!");
                     return;
                 }
+
+                if (sourceField.getText() == "unknown" || targetField.getText() == "unknown") {
+                    errorLabel.setText("Source or target file invalid!");
+                    return;
+                }
+
+                // Get selected options
+                List<DataBlock> sections = new LinkedList<DataBlock>();
+                for (Component c : dataPanel.getComponents()) {
+                    if (c instanceof JCheckBox) {
+                        if (((JCheckBox)c).isSelected()) {
+                            sections.add(Constants.APPEARANCE_MAP.get(((JCheckBox)c).getText()));
+                        }
+                    }
+                }
+                // Finally merge to target file
+                mergeBySections(sections);
             }
         });
+    }
+
+    private void mergeBySections(List<DataBlock> sections) {
+        for (DataBlock section : sections) {
+            System.arraycopy(sourceData, section.getOffset(), targetData, section.getOffset(), section.getLength());
+        }
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(targetField.getText());
+            fos.write(targetData);
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        JOptionPane.showMessageDialog(null, "Successfully merged to target customization file.", "Success", JOptionPane.PLAIN_MESSAGE);
     }
 
     private void loadSourceData(String path) {
